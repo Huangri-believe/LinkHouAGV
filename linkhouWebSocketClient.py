@@ -2,7 +2,6 @@ import websocket
 import json
 import rel
 import threading
-import time
 import socket
 import re
 import requests
@@ -129,74 +128,65 @@ class LinkHouApi(LinkHouWebSocketClient):
     # =================================================
     # 机器人信息相关
     # =================================================
-
     #获取机器人状态
-    def GetState(self):
+    def GetState(self,id): #id为机器人编号
         url = "http://192.168.16.216:6002/api/AMR/GetState"
-        payload = json.dumps({
-            "id": 5
-        })
+        setup = {"id": id}
+        payload = json.dumps(setup)
         headers = {
             'Content-Type': 'application/json'
         }
         response = requests.request("POST", url, headers=headers, data=payload)
         print(response.text)
     #获取地图信息
-    def GetFloorMap(self):
+    def GetFloorMap(self,id,floorId,mapType):
         url = "http://192.168.16.216:6002/api/Map/GetFloorMap"
-
-        payload = json.dumps({
-            "id": 5,
-            "floorId": 1,
-            "mapType": 0
-        })
+        setup = {
+            "id": id,
+            "floorId": floorId,
+            "mapType": mapType
+        }
+        payload = json.dumps(setup)
         headers = {
             'Content-Type': 'application/json'
         }
-
         response = requests.request("POST", url, headers=headers, data=payload)
-
         print(response.text)
     #暂停行走
-    def PauseWalk(self):
+    def PauseWalk(self,id):
         url = "http://192.168.16.216:6002/api/AMR/PauseWalk"
-
-        payload = json.dumps({
-            "id": 5
-        })
+        setup = {"id": id}
+        payload = json.dumps(setup)
         headers = {
             'Content-Type': 'application/json'
         }
         response = requests.request("POST", url, headers=headers, data=payload)
         print(response.text)
     #继续行走
-    def ContinueWalk(self):
+    def ContinueWalk(self,id):
         url = "http://192.168.16.216:6002/api/AMR/ContinueWalk"
-        payload = json.dumps({
-            "id": 5
-        })
+        setup = {"id": id}
+        payload = json.dumps(setup)
         headers = {
             'Content-Type': 'application/json'
         }
         response = requests.request("POST", url, headers=headers, data=payload)
         print(response.text)
     #设置为自动模式
-    def SetAutoMode(self):
+    def SetAutoMode(self,id):
         url = "http://192.168.16.216:6002/api/AMR/SetAutoMode"
-        payload = json.dumps({
-            "id": 5
-        })
+        setup = {"id": id}
+        payload = json.dumps(setup)
         headers = {
             'Content-Type': 'application/json'
         }
         response = requests.request("POST", url, headers=headers, data=payload)
         print(response.text)
     #设置为手动模式
-    def SetManualMode(self):
+    def SetManualMode(self,id):
         url = "http://192.168.16.216:6002/api/AMR/SetManualMode"
-        payload = json.dumps({
-            "id": 5
-        })
+        setup={"id": id}
+        payload = json.dumps(setup)
         headers = {
             'Content-Type': 'application/json'
         }
@@ -280,22 +270,22 @@ class LinkHouApi(LinkHouWebSocketClient):
         response = requests.request("POST", url, headers=headers, data=payload)
         print(response.text)
     #语音播报接口
-    def TextSpeach(self):
+    def TextSpeach(self,id,text:str):
         url = "http://192.168.16.216:6002/api/AMR/TextSpeach"
-        payload = json.dumps({
-            "id": 5 ,
-            "text": "你好"
-        })
+        setup = {"id": id,
+            "text": text}
+        payload = json.dumps(setup)
         headers = {
             'Content-Type': 'application/json'
         }
         response = requests.request("POST", url, headers=headers, data=payload)
         print(response.text)
     #取消任务接口
-    def CancelTask(self):
+    def CancelTask(self,id):
         url = "http://192.168.16.216:6002/api/Task/CancelTask"
+        setup={"id": id}
         payload = json.dumps({
-            "id": 10058
+            setup
         })
         headers = {
             'Content-Type': 'application/json'
@@ -303,9 +293,9 @@ class LinkHouApi(LinkHouWebSocketClient):
         response = requests.request("POST", url, headers=headers, data=payload)
         print(response.text)
     #创建任务接口
-    def CreateTask(self):
+    def CreateTask(self,stationId,stationName,actionType = 0,):
         url = "http://192.168.16.216:6002/api/Task/CreateTask"
-        payload = json.dumps({
+        setup={
             "sourceId": "string",
             "taskNum": "string",
             "mapId": 0,
@@ -313,18 +303,18 @@ class LinkHouApi(LinkHouWebSocketClient):
             "agvId": 0,
             "stationList": [
                 {
-                    "stationId": 10012,
-                    "actionType": 0,
+                    "stationId": stationId,
+                    "actionType": actionType,
                     "agvBufferIndex": 1,
                     "stationBufferIndex": 1,
                     "actionParam": 0,
-                    "stationName": "charge_area_2F"
+                    "stationName": stationName
                 }
-
             ],
             "priority": 0,
             "maxLoopTimes": 1
-        })
+        }
+        payload = json.dumps(setup)
         headers = {
             'Content-Type': 'application/json'
         }
