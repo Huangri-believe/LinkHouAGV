@@ -14,6 +14,7 @@
  
 # 使用说明
 主要功能
+
  CreateTask(self,stationId,stationName,actionType = 0,) // 用于创建导航任务，stationId = 站台编号，stationName = 站台名称 actionType = 动作类型
  
  CancelTask(self,id) //取消任务，id = 任务编号
