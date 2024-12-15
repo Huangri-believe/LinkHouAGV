@@ -15,7 +15,7 @@
 # 使用说明
 使用pip安装
 
-pip install AGVlinhou
+pip install AGVlinkhou
 
 主要功能
 
