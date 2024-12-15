@@ -13,6 +13,10 @@
     ├── linkhouWebSocketClient.py    // 包含WebSocket连接以及底盘API调用的接口
  
 # 使用说明
+使用pip安装
+
+pip install AGVlinhou
+
 主要功能
 
  CreateTask(self,stationId,stationName,actionType = 0,) // 用于创建导航任务，stationId = 站台编号，stationName = 站台名称 actionType = 动作类型
