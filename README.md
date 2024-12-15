@@ -24,6 +24,8 @@ pip install AGVlinkhou
  CancelTask(self,id) //取消任务，id = 任务编号
  
  GetState(self,id) // 获取机器人状态，id = 机器人编号
+
+ 仅适用于内部的机器人
 # 版本内容更新
 ###### v1.0.1:
 1.增加了输入了机器人ID，便于调用不同机器人
