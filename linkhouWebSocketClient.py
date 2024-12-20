@@ -6,8 +6,6 @@ import socket
 import re
 import requests
 
-
-
 class LinkHouWebSocketClient:
     def __init__(self, url, debug=False):
         self.subscription_events = {}
@@ -293,30 +291,44 @@ class LinkHouApi(LinkHouWebSocketClient):
         response = requests.request("POST", url, headers=headers, data=payload)
         print(response.text)
     #创建任务接口
-    def CreateTask(self,stationId,stationName,actionType = 0,):
+    def CreateTask(self,stationnumber):
         url = "http://192.168.16.216:6002/api/Task/CreateTask"
+        stationList=[]
+
+        for i in range(0,stationnumber):
+            stationId=input(f"请输入站台{i+1}:")
+            actType=input("请输入动作类型，0:无;1:取货;2:放货;3:充电;4:待命;5:等待;6:换货:")
+            stationlist={ "stationId": stationId,
+                    "actionType": actType,
+                    "agvBufferIndex": 1,
+                    "stationBufferIndex": 1,
+                    "actionParam": 0,
+                    "stationName": 1}
+            stationList.append(stationlist)
+        loop = input("是否循环执行，1:不循环 2:循环")
         setup={
             "sourceId": "string",
             "taskNum": "string",
             "mapId": 0,
             "agvTypeId": 0,
             "agvId": 0,
-            "stationList": [
-                {
-                    "stationId": stationId,
-                    "actionType": actionType,
-                    "agvBufferIndex": 1,
-                    "stationBufferIndex": 1,
-                    "actionParam": 0,
-                    "stationName": stationName
-                }
-            ],
+            "stationList":stationList,
             "priority": 0,
-            "maxLoopTimes": 1
+            "maxLoopTimes": loop
         }
         payload = json.dumps(setup)
         headers = {
             'Content-Type': 'application/json'
         }
         response = requests.request("POST", url, headers=headers, data=payload)
+        print(response.text)
+
+    def GetAllTask(self):
+        url = "http://192.168.16.216:6002/api/Task/GetAllTask"
+
+        payload = {}
+        headers = {}
+
+        response = requests.request("POST", url, headers=headers, data=payload)
+
         print(response.text)
