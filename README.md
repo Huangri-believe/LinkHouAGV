@@ -19,7 +19,7 @@ pip install AGVlinkhou
 
 主要功能
 
- CreateTask(self,stationId,stationName,actionType = 0,) // 用于创建导航任务，stationId = 站台编号，stationName = 站台名称 actionType = 动作类型
+ CreateTask(self,stationnumber) // 用于创建导航任务，stationnumber 需要前往的站台数量，之后根据提示输入站台编号
  
  CancelTask(self,id) //取消任务，id = 任务编号
  
@@ -29,5 +29,7 @@ pip install AGVlinkhou
 # 版本内容更新
 ###### v1.0.1:
 1.增加了输入了机器人ID，便于调用不同机器人
+###### v1.0.3:
+1.修改了创建导航任务的逻辑，现在可以前往多个导航点，并且选择是否需要循环操作
 
     
